@@ -1,14 +1,15 @@
-// ai-excited-01 entry (Node 22, standard library only): the image beside this
-// file is copied to /output/entry.png. The gate takes a whole PNG or JPEG of
-// at most 1 MiB and 1024 by 1024 pixels; this one is a JPEG, 1024x683.
-// A plain copy is deterministic, so both grader runs write identical bytes.
-//
-// Outside the grader's container, MAKEFUN_OUTPUT_DIR stands in for /output:
-//   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
+// ai-excited-01 — "Koi Starfall"
+// Copies the entry image to the make.fun output directory.
+// Node 22, stdlib only. Run: node main.ts
+// (MAKEFUN_OUTPUT_DIR defaults to /output.)
 
-import { copyFileSync, mkdirSync } from 'node:fs';
-import { join } from 'node:path';
+import { copyFileSync, mkdirSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
+const here = dirname(fileURLToPath(import.meta.url));
+const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
+
 mkdirSync(outDir, { recursive: true });
-copyFileSync(new URL('./entry.png', import.meta.url), join(outDir, 'entry.png'));
+copyFileSync(join(here, "entry.png"), join(outDir, "entry.png"));
+console.log(`entry.png written to ${join(outDir, "entry.png")}`);
